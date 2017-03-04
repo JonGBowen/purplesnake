@@ -94,7 +94,7 @@ def move():
     # Get next move from path
     if not move:
         # We're screwed at this point
-        taunt = 'I hate all of you'
+        taunt = 'I hate you all !!!'
         movelist = ['north', 'south', 'east', 'west']
         move = random.choice(movelist)
 
