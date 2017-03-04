@@ -64,11 +64,23 @@ def move():
         # is not handled at all!
         print('ERROR')
         print(ex)
+
+    closest_food = findClosestFoodFromPath(path)
+
+    # NEW STUFF HERE 
+    if path:
+        is_closest_to_food = check_if_closest_snake_head(data,mySnakeHeadPos,closest_food)
+    else:
+        is_closest_to_food = False
+
+
+    # END NEW STUFF
     if path == None:
         path = [(0,0),(0,1)]
     # Get Possible Moves
     possibleMoves = []
     print path
+
     # Get next move from path
     tempDist = getDistance(getMySnakeHeadPos,path[1])
     # move = getMoveStringFromMoveVector(tempDist)
@@ -141,6 +153,11 @@ def getDistance(coord1,coord2):
 def findClosestFood(data):
     pass
 
+def findClosestFoodFromPath(Path):
+    length = len(Path)
+    return Path[length-1]
+    pass
+
 def manhattan(a, b):
    # Manhattan distance on a square grid
    return abs(a.x - b.x) + abs(a.y - b.y)
@@ -156,14 +173,17 @@ def get_y_distance(a, b):
 def super_conservative_closest():
     return "Jon"
 
-def check_if_closest_snake_head(data,distance_to_closest_food,closest_food_coord):
+def check_if_closest_snake_head(data,my_head_pos,closest_food_coord):
     snakes = data["snakes"]
     for snake in snakes:
         # print snake
         coords = snake.get("coords")[0]
         length = len(coordList)
         headPos = coordList[length-1]
-        other_snake_distance_to_food
+        other_snake_distance_to_food = manhattan(closest_food_coord,headPos)
+        if other_snake_distance_to_food > manhattan(closest_food_coord,my_head_pos):
+            return True
+    return False
 
 
 def getCurrentState(health):
