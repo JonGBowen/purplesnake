@@ -48,14 +48,24 @@ def move():
     mySnakeHeadPos = getMySnakeHeadPos(mySnake)
     mySnakeNeckPos = getMySnakeNeckPos(mySnake)
 
-    graph = buildMatrix(data)
+    # pdb.set_trace()
+
+    graph, TRANSLATE = buildMatrix(data)
 
     snake_state = "normal"
 
     validMoves = getPossibleMoves(mySnakeHeadPos,mySnakeNeckPos,graph)
     # Transform int matrix to Node matrix.
-    TRANSLATE = {0: 'o', 1: 'x', 2: 'g'}
-    graph = [[Node(TRANSLATE[x], (i, j)) for j, x in enumerate(row)] for i, row in enumerate(graph)]
+
+    # print "graph is:" + str(graph)
+
+    # TRANSLATE = {0: 'o', 1: 'x', 2: 'g'}
+
+    # graph = [[Node(TRANSLATE[x], (i, j)) for j, x in enumerate(row)] for i, row in enumerate(graph)]
+
+    graph = [[Node(TRANSLATE[str(x)], (i, j)) for j, x in enumerate(row)] for i, row in enumerate(graph)]
+
+
     # Find path
     path = None
     try:
@@ -255,13 +265,18 @@ def buildMatrix(data):
     height = data["height"]
     tempRow = []
     rows = []
+
+    translate = {}
     # init graph with all 0s
     for n in range(height):
         for m in range(width):
             tempNode = Node(0,(m,n))
+            translate[str((m,n))] = 0 # new
+
             tempRow.append(tempNode)
         rows.append(tempRow)
         tempRow = []
+
     # add obstacles
     snakes = data["snakes"]
     for snake in snakes:
@@ -271,21 +286,12 @@ def buildMatrix(data):
         for coord in coords:
             position = (coord[0],coord[1])
             tempNode = Node(1,position)
+            translate[str(position)] = 1 # new
 
             rowList = rows[coord[1]]
             rowList[coord[0]] = tempNode
             rows[coord[1]] = rowList
             # 1 = obstacle
-
-    if "walls" in data:
-        walls = data["walls"]
-        for wall in walls:
-            position = (wall[0],wall[1])
-            tempNode = Node(3,position)
-
-            rowList = rows[coord[1]]
-            rowList[coord[0]] = tempNode
-            rows[coord[1]] = rowList
 
     foods = data["food"]
     for food in foods:
@@ -293,25 +299,14 @@ def buildMatrix(data):
 
         position = (coord[0],coord[1])
         tempNode = Node(2,position)
+        translate[str(position)] = 2 # new
 
         rowList = rows[coord[1]]
         rowList[coord[0]] = tempNode
         rows[coord[1]] = rowList
         # 2 = food/coin
 
-    # coins = data["gold"]
-    # for coin in coins:
-    #     # print snake
-
-    #     position = (coord[0],coord[1])
-    #     tempNode = Node(2,position)
-
-    #     rowList = rows[coord[1]]
-    #     rowList[coord[0]] = tempNode
-    #     rows[coord[1]] = rowList
-    #     # 2 = food/coin
-
-    return rows
+    return rows, translate
 
 def bfs(graph, startPos):
     start = Node(1,startPos)
