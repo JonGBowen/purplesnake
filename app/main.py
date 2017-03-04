@@ -35,7 +35,6 @@ def start():
 @bottle.post('/move')
 def move():
     data = bottle.request.json
-
     # TODO: Do things with data
 
     # Snake ID:
@@ -105,9 +104,10 @@ def move():
 
 def getOwnSnake(data):
     snakes = data["snakes"]
+    print data
     mySnake = None
     for snake in snakes:
-        if snake["snake_id"] == data["you"]:
+        if snake["id"] == data["you"]:
             mySnake = snake
             break
     print mySnake
