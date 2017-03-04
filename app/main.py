@@ -63,14 +63,11 @@ def move():
     validMoves = getPossibleMoves(mySnakeHeadPos,mySnakeNeckPos,graph)
     # Transform int matrix to Node matrix.
 
-    # print "graph is:" + str(graph)
-
     # TRANSLATE = {0: 'o', 1: 'x', 2: 'g'}
 
     # graph = [[Node(TRANSLATE[x], (i, j)) for j, x in enumerate(row)] for i, row in enumerate(graph)]
 
-    graph = [[Node(TRANSLATE[str(x)], (i, j)) for j, x in enumerate(row)] for i, row in enumerate(graph)]
-
+    graph = [[Node(TRANSLATE[str(x)], (j, i)) for j, x in enumerate(row)] for i, row in enumerate(graph)]
 
     # Find path
     path = None
