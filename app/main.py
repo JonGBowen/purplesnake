@@ -68,6 +68,7 @@ def move():
         print('ERROR')
         print(ex)
 
+    taunt = ''
     # NEW STUFF HERE 
     if path:
         closest_food = findClosestFoodFromPath(path)
@@ -79,6 +80,7 @@ def move():
         # move towards the food
         tempDist = getDistance(mySnakeHeadPos,path[1])
         move = getMoveStringFromMoveVector(tempDist)
+        taunt = "this food pellet is mine"
 
         # TODO: Avoid bucket traps, L-traps
 
@@ -92,12 +94,13 @@ def move():
     # Get next move from path
     if not move:
         # We're screwed at this point
+        taunt = 'I hate all of you'
         movelist = ['north', 'south', 'east', 'west']
         move = random.choice(movelist)
 
     return {
         'move': move,
-        'taunt': ''
+        'taunt': taunt
     }
 
 def getOwnSnake(data):
@@ -214,6 +217,9 @@ def getCurrentLengthState(length_of_snake):
         return "short"
     else:
         return "super_short"
+
+def getTaunt(snake_state):
+    return "DEFAULT TAUNT!!!!"
 
 def getMySnakeHeadPos(mySnake):
     coordList = mySnake["coords"]
