@@ -38,7 +38,7 @@ def move():
 
     # TODO: Do things with data
 
-    Snake ID:
+    # Snake ID:
     mySnakeID = "ef9c2d70-3a48-4b40-a20f-7b02afcc9e5b"
 
     # Get Own Snake
@@ -79,6 +79,7 @@ def move():
         'move': move,
         'taunt': ''
     }
+
 def getOwnSnake(data):
     snakes = data["snakes"]
     mySnake = None
@@ -143,6 +144,27 @@ def findClosestFood(data):
 def manhattan(a, b):
    # Manhattan distance on a square grid
    return abs(a.x - b.x) + abs(a.y - b.y)
+
+def get_x_distance(a, b):
+   # Manhattan distance on a square grid
+   return abs(a.x - b.x)
+
+def get_y_distance(a, b):
+   # Manhattan distance on a square grid
+   return abs(a.y - b.y)
+
+def super_conservative_closest():
+    return "Jon"
+
+def check_if_closest_snake_head(data,distance_to_closest_food,closest_food_coord):
+    snakes = data["snakes"]
+    for snake in snakes:
+        # print snake
+        coords = snake.get("coords")[0]
+        length = len(coordList)
+        headPos = coordList[length-1]
+        other_snake_distance_to_food
+
 
 def getCurrentState(health):
     if (health > 55):
