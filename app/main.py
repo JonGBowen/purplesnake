@@ -107,7 +107,7 @@ def getOwnSnake(data):
     snakes = data["snakes"]
     mySnake = None
     for snake in snakes:
-        if snake["id"] == data["you"]:
+        if snake["snake_id"] == data["you"]:
             mySnake = snake
             break
     print mySnake
