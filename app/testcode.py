@@ -37,10 +37,8 @@ def move():
     data = bottle.request.json
     # TODO: Do things with data
 
-    direction = "derp"
-
     # Snake ID:
-    mySnakeID = data["you"]
+    mySnakeID = "ef9c2d70-3a48-4b40-a20f-7b02afcc9e5b"
 
     # Get Own Snake
     mySnake = getOwnSnake(data)
@@ -50,24 +48,14 @@ def move():
     mySnakeHeadPos = getMySnakeHeadPos(mySnake)
     mySnakeNeckPos = getMySnakeNeckPos(mySnake)
 
-    # pdb.set_trace()
-
-    graph, TRANSLATE = buildMatrix(data)
+    graph = buildMatrix(data)
 
     snake_state = "normal"
 
     validMoves = getPossibleMoves(mySnakeHeadPos,mySnakeNeckPos,graph)
     # Transform int matrix to Node matrix.
-
-    # print "graph is:" + str(graph)
-
-    # TRANSLATE = {0: 'o', 1: 'x', 2: 'g'}
-
-    # graph = [[Node(TRANSLATE[x], (i, j)) for j, x in enumerate(row)] for i, row in enumerate(graph)]
-
-    graph = [[Node(TRANSLATE[str(x)], (i, j)) for j, x in enumerate(row)] for i, row in enumerate(graph)]
-
-
+    TRANSLATE = {0: 'o', 1: 'x', 2: 'g'}
+    graph = [[Node(TRANSLATE[x], (i, j)) for j, x in enumerate(row)] for i, row in enumerate(graph)]
     # Find path
     path = None
     try:
@@ -90,7 +78,7 @@ def move():
     if is_closest_to_food and Path:
         # move towards the food
         tempDist = getDistance(mySnakeHeadPos,path[1])
-        direction = getMoveStringFromMoveVector(tempDist)
+        move = getMoveStringFromMoveVector(tempDist)
         taunt = "this food pellet is mine"
 
         # TODO: Avoid bucket traps, L-traps
@@ -99,18 +87,18 @@ def move():
     if path == None:
         path = [(0,0),(0,1)]
     # Get Possible Moves
-    possibleMoves = getPossibleMoves(mySnakeHeadPos,mySnakeNeckPos,graph)
+    possibleMoves = getPossibleMoves(getMySnakeHeadPos,mySnakeNeckPos,graph)
     print path
 
     # Get next move from path
-    if direction == "derp":
+    if not move:
         # We're screwed at this point
         taunt = 'I hate you all !!!'
         movelist = ['up', 'down', 'right', 'left']
-        direction = random.choice(movelist)
+        move = random.choice(movelist)
 
     return {
-        'move': direction,
+        'move': move,
         'taunt': taunt
     }
 
@@ -133,7 +121,7 @@ def getPossibleMoves(headPos,neckPos,graph):
     possibleMoves = []
     disallowedMoves = []
     if dist == (-1,0):
-        disallowedMoves.append("left")
+        disallowedMoves.append()
     elif dist == (0,-1):
         disallowedMoves.append("down")
     elif dist == (1,0):
@@ -203,7 +191,7 @@ def check_if_closest_snake_head(data,my_head_pos,closest_food_coord):
         # print snake
         coords = snake.get("coords")[0]
         length = len(coordList)
-        headPos = coordList[0]
+        headPos = coordList[length-1]
         other_snake_distance_to_food = manhattan(closest_food_coord,headPos)
         if other_snake_distance_to_food > manhattan(closest_food_coord,my_head_pos):
             return True
@@ -236,15 +224,14 @@ def getTaunt(snake_state):
 def getMySnakeHeadPos(mySnake):
     coordList = mySnake["coords"]
     length = len(coordList)
-    headPos = coordList[0]
-    print "headpos:" + str(headPos)
+    headPos = coordList[length-1]
+    print headPos
     return headPos
 
 def getMySnakeNeckPos(mySnake):
     coordList = mySnake["coords"]
     length = len(coordList)
-    neckPos = coordList[1]
-    print "neckPos:" + str(neckPos)
+    neckPos = coordList[length-2]
     return neckPos
 
 class Node:
@@ -268,18 +255,13 @@ def buildMatrix(data):
     height = data["height"]
     tempRow = []
     rows = []
-
-    translate = {}
     # init graph with all 0s
     for n in range(height):
         for m in range(width):
             tempNode = Node(0,(m,n))
-            translate[str((m,n))] = 0 # new
-
             tempRow.append(tempNode)
         rows.append(tempRow)
         tempRow = []
-
     # add obstacles
     snakes = data["snakes"]
     for snake in snakes:
@@ -289,12 +271,21 @@ def buildMatrix(data):
         for coord in coords:
             position = (coord[0],coord[1])
             tempNode = Node(1,position)
-            translate[str(position)] = 1 # new
 
             rowList = rows[coord[1]]
             rowList[coord[0]] = tempNode
             rows[coord[1]] = rowList
             # 1 = obstacle
+
+    if "walls" in data:
+        walls = data["walls"]
+        for wall in walls:
+            position = (wall[0],wall[1])
+            tempNode = Node(3,position)
+
+            rowList = rows[coord[1]]
+            rowList[coord[0]] = tempNode
+            rows[coord[1]] = rowList
 
     foods = data["food"]
     for food in foods:
@@ -302,14 +293,25 @@ def buildMatrix(data):
 
         position = (coord[0],coord[1])
         tempNode = Node(2,position)
-        translate[str(position)] = 2 # new
 
         rowList = rows[coord[1]]
         rowList[coord[0]] = tempNode
         rows[coord[1]] = rowList
         # 2 = food/coin
 
-    return rows, translate
+    # coins = data["gold"]
+    # for coin in coins:
+    #     # print snake
+
+    #     position = (coord[0],coord[1])
+    #     tempNode = Node(2,position)
+
+    #     rowList = rows[coord[1]]
+    #     rowList[coord[0]] = tempNode
+    #     rows[coord[1]] = rowList
+    #     # 2 = food/coin
+
+    return rows
 
 def bfs(graph, startPos):
     start = Node(1,startPos)
