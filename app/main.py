@@ -35,6 +35,10 @@ def start():
 @bottle.post('/move')
 def move():
     data = bottle.request.json
+
+    # Log requests so we can test locally when we EXPLUDE!
+    print "REQUEST: " + str(data)
+
     # TODO: Do things with data
 
     direction = "derp"
