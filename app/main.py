@@ -1,5 +1,5 @@
 import bottle
-#import pdb
+import pdb
 import random
 import os
 
@@ -36,42 +36,42 @@ def start():
 def move():
     data = bottle.request.json
 
-    # # TODO: Do things with data
+    # TODO: Do things with data
 
-    # # Snake ID:
-    # # mySnakeID = "ef9c2d70-3a48-4b40-a20f-7b02afcc9e5b"
+    Snake ID:
+    mySnakeID = "ef9c2d70-3a48-4b40-a20f-7b02afcc9e5b"
 
-    # # Get Own Snake
-    # mySnake = getOwnSnake(data)
-    # mySnakeState = getCurrentState(mySnake["health"])
+    # Get Own Snake
+    mySnake = getOwnSnake(data)
+    mySnakeState = getCurrentState(mySnake["health"])
 
-    # mySnakeHeadPos = getMySnakeHeadPos(mySnake)
-    # mySnakeNeckPos = getMySnakeNeckPos(mySnake)
+    mySnakeHeadPos = getMySnakeHeadPos(mySnake)
+    mySnakeNeckPos = getMySnakeNeckPos(mySnake)
 
-    # graph = buildMatrix(data)
+    graph = buildMatrix(data)
 
-    # validMoves = getPossibleMoves(mySnakeHeadPos,mySnakeNeckPos,graph)
-    # # Transform int matrix to Node matrix.
-    # # TRANSLATE = {0: 'o', 1: 'x', 2: 'g'}
-    # # graph = [[Node(TRANSLATE[x], (i, j)) for j, x in enumerate(row)] for i, row in enumerate(graph)]
-    # # Find path
-    # path = None
-    # try:
-    #     path = bfs(graph, mySnakeHeadPos)
-    #     print("Path found: {!r}".format(path))
-    # except Exception as ex:
-    #     # Learn to use exceptions. In your original code, "no path" situation
-    #     # is not handled at all!
-    #     print('ERROR')
-    #     print(ex)
-    # if path == None:
-    #     path = [(0,0),(0,1)]
-    # # Get Possible Moves
-    # possibleMoves = []
-    # print path
-    # # Get next move from path
-    # tempDist = getDistance(getMySnakeHeadPos,path[1])
-    # # move = getMoveStringFromMoveVector(tempDist)
+    validMoves = getPossibleMoves(mySnakeHeadPos,mySnakeNeckPos,graph)
+    # Transform int matrix to Node matrix.
+    TRANSLATE = {0: 'o', 1: 'x', 2: 'g'}
+    graph = [[Node(TRANSLATE[x], (i, j)) for j, x in enumerate(row)] for i, row in enumerate(graph)]
+    # Find path
+    path = None
+    try:
+        path = bfs(graph, mySnakeHeadPos)
+        print("Path found: {!r}".format(path))
+    except Exception as ex:
+        # Learn to use exceptions. In your original code, "no path" situation
+        # is not handled at all!
+        print('ERROR')
+        print(ex)
+    if path == None:
+        path = [(0,0),(0,1)]
+    # Get Possible Moves
+    possibleMoves = []
+    print path
+    # Get next move from path
+    tempDist = getDistance(getMySnakeHeadPos,path[1])
+    # move = getMoveStringFromMoveVector(tempDist)
     movelist = ['north', 'south', 'east', 'west']
     move = random.choice(movelist)
 
@@ -89,20 +89,20 @@ def getOwnSnake(data):
     print mySnake
     return mySnake
 
-# def getNextMoveFromPath:
+def getNextMoveFromPath:
 
 def getPossibleMoves(headPos,neckPos,graph):
     dist = getDistance(headPos,neckPos)
     possibleMoves = []
     disallowedMoves = []
-    # if dist == (-1,0):
-    #     disallowedMoves.append()
-    # elif dist == (0,-1):
-    #     disallowedMoves.append("south")
-    # elif dist == (1,0):
-    #     disallowedMoves.append("east")
-    # elif dist == (0,1):
-    #     disallowedMoves.append("north")
+    if dist == (-1,0):
+        disallowedMoves.append()
+    elif dist == (0,-1):
+        disallowedMoves.append("south")
+    elif dist == (1,0):
+        disallowedMoves.append("east")
+    elif dist == (0,1):
+        disallowedMoves.append("north")
     disallowedMoves.append(dist)
 
     if (-1,0) not in disallowedMoves:
@@ -140,9 +140,9 @@ def getDistance(coord1,coord2):
 def findClosestFood(data):
     pass
 
-# def manhattan(a, b):
-#    # Manhattan distance on a square grid
-#    return abs(a.x - b.x) + abs(a.y - b.y)
+def manhattan(a, b):
+   # Manhattan distance on a square grid
+   return abs(a.x - b.x) + abs(a.y - b.y)
 
 def getCurrentState(health):
     if (health > 55):
@@ -293,7 +293,7 @@ def bfs(graph, startPos):
                 neighbor.visited = True
                 fringe.append(path + [neighbor])  # creates copy of list
     raise Exception('Path not found!')
-pdb.set_trace()
+#pdb.set_trace()
 @bottle.post('/end')
 def end():
     data = bottle.request.json
