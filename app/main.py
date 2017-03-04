@@ -28,7 +28,7 @@ def start():
     # TODO: Do things with data
 
     return {
-        'taunt': ''
+        'taunt': 'Insert meme here'
     }
 
 
