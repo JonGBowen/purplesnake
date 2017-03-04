@@ -1,4 +1,5 @@
 import bottle
+#import pdb
 import random
 import os
 
@@ -292,7 +293,7 @@ def bfs(graph, startPos):
                 neighbor.visited = True
                 fringe.append(path + [neighbor])  # creates copy of list
     raise Exception('Path not found!')
-
+pdb.set_trace()
 @bottle.post('/end')
 def end():
     data = bottle.request.json
