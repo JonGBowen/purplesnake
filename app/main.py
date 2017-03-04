@@ -69,7 +69,7 @@ def move():
         print(ex)
 
     taunt = ''
-    # NEW STUFF HERE 
+    # NEW STUFF HERE
     if path:
         closest_food = findClosestFoodFromPath(path)
         is_closest_to_food = check_if_closest_snake_head(data,mySnakeHeadPos,closest_food)
