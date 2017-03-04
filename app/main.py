@@ -64,7 +64,7 @@ def move():
         # is not handled at all!
         print('ERROR')
         print(ex)
-        
+
     # NEW STUFF HERE 
     if path:
         closest_food = findClosestFoodFromPath(path)
@@ -74,20 +74,23 @@ def move():
 
     if is_closest_to_food and Path:
         # move towards the food
+        tempDist = getDistance(mySnakeHeadPos,path[1])
+        move = getMoveStringFromMoveVector(tempDist)
+
         # TODO: Avoid bucket traps, L-traps
 
     # END NEW STUFF
     if path == None:
         path = [(0,0),(0,1)]
     # Get Possible Moves
-    possibleMoves = []
+    possibleMoves = getPossibleMoves(getMySnakeHeadPos,mySnakeNeckPos,graph)
     print path
 
     # Get next move from path
-    tempDist = getDistance(mySnakeHeadPos,path[1])
-    # move = getMoveStringFromMoveVector(tempDist)
-    movelist = ['north', 'south', 'east', 'west']
-    move = random.choice(movelist)
+    if not move:
+        # We're screwed at this point
+        movelist = ['north', 'south', 'east', 'west']
+        move = random.choice(movelist)
 
     return {
         'move': move,
