@@ -44,7 +44,7 @@ def move():
     # Get Own Snake
     mySnake = getOwnSnake(data)
     mySnakeHealthState = getCurrentHealthState(mySnake["health"])
-    mySnakeLengthState = getCurrentLengthState(len(mySnake["coords"])
+    mySnakeLengthState = getCurrentLengthState(len(mySnake["coords"]))
 
     mySnakeHeadPos = getMySnakeHeadPos(mySnake)
     mySnakeNeckPos = getMySnakeNeckPos(mySnake)
