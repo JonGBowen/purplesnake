@@ -37,6 +37,8 @@ def move():
     data = bottle.request.json
     # TODO: Do things with data
 
+    direction = "derp"
+
     # Snake ID:
     mySnakeID = data["you"]
 
@@ -88,7 +90,7 @@ def move():
     if is_closest_to_food and Path:
         # move towards the food
         tempDist = getDistance(mySnakeHeadPos,path[1])
-        move = getMoveStringFromMoveVector(tempDist)
+        direction = getMoveStringFromMoveVector(tempDist)
         taunt = "this food pellet is mine"
 
         # TODO: Avoid bucket traps, L-traps
@@ -97,18 +99,18 @@ def move():
     if path == None:
         path = [(0,0),(0,1)]
     # Get Possible Moves
-    possibleMoves = getPossibleMoves(getMySnakeHeadPos,mySnakeNeckPos,graph)
+    possibleMoves = getPossibleMoves(mySnakeHeadPos,mySnakeNeckPos,graph)
     print path
 
     # Get next move from path
-    if not move:
+    if direction == "derp":
         # We're screwed at this point
         taunt = 'I hate you all !!!'
         movelist = ['up', 'down', 'right', 'left']
-        move = random.choice(movelist)
+        direction = random.choice(movelist)
 
     return {
-        'move': move,
+        'move': direction,
         'taunt': taunt
     }
 
@@ -235,13 +237,14 @@ def getMySnakeHeadPos(mySnake):
     coordList = mySnake["coords"]
     length = len(coordList)
     headPos = coordList[0]
-    print headPos
+    print "headpos:" + str(headPos)
     return headPos
 
 def getMySnakeNeckPos(mySnake):
     coordList = mySnake["coords"]
     length = len(coordList)
     neckPos = coordList[1]
+    print "neckPos:" + str(neckPos)
     return neckPos
 
 class Node:
