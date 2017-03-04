@@ -43,7 +43,7 @@ def move():
 
     # Get Own Snake
     mySnake = getOwnSnake(data)
-    mySnakeHealthState = getCurrentHealthState(mySnake["health"])
+    mySnakeHealthState = getCurrentHealthState(mySnake["health_points"])
     mySnakeLengthState = getCurrentLengthState(len(mySnake["coords"]))
 
     mySnakeHeadPos = getMySnakeHeadPos(mySnake)
@@ -95,7 +95,7 @@ def move():
     if not move:
         # We're screwed at this point
         taunt = 'I hate you all !!!'
-        movelist = ['north', 'south', 'east', 'west']
+        movelist = ['up', 'down', 'right', 'left']
         move = random.choice(movelist)
 
     return {
@@ -107,7 +107,7 @@ def getOwnSnake(data):
     snakes = data["snakes"]
     mySnake = None
     for snake in snakes:
-        if snake["id"] == "ef9c2d70-3a48-4b40-a20f-7b02afcc9e5b":
+        if snake["id"] == data["you"]:
             mySnake = snake
             break
     print mySnake
@@ -123,11 +123,11 @@ def getPossibleMoves(headPos,neckPos,graph):
     if dist == (-1,0):
         disallowedMoves.append()
     elif dist == (0,-1):
-        disallowedMoves.append("south")
+        disallowedMoves.append("down")
     elif dist == (1,0):
-        disallowedMoves.append("east")
+        disallowedMoves.append("right")
     elif dist == (0,1):
-        disallowedMoves.append("north")
+        disallowedMoves.append("up")
     disallowedMoves.append(dist)
 
     if (-1,0) not in disallowedMoves:
@@ -142,15 +142,15 @@ def getPossibleMoves(headPos,neckPos,graph):
     return possibleMoves
 
 def getMoveStringFromMoveVector(moveVector):
-    move = "north"
+    move = "up"
     if moveVector == (-1,0):
-        move = "west"
+        move = "left"
     elif moveVector == (0,-1):
-        move = "south"
+        move = "down"
     elif moveVector == (1,0):
-        move = "east"
+        move = "right"
     elif moveVector == (0,1):
-        move = "north"
+        move = "up"
     return move
 
 def getDistance(coord1,coord2):
