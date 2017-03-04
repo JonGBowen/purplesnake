@@ -91,7 +91,7 @@ def move():
     else:
         is_closest_to_food = False
 
-    if is_closest_to_food and Path:
+    if is_closest_to_food and path:
         # move towards the food
         tempDist = getDistance(mySnakeHeadPos,path[1])
         direction = getMoveStringFromMoveVector(tempDist)
