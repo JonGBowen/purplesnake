@@ -107,11 +107,9 @@ def move():
     print path
 
     # Get next move from path
-    if direction == "derp":
+    if direction == 'derp':
         # We're screwed at this point
         taunt = 'I hate you all !!!'
-        movelist = ['up', 'down', 'right', 'left']
-        direction = random.choice(movelist)
 
     return {
         'move': direction,
