@@ -102,7 +102,8 @@ def getOwnSnake(data):
     print mySnake
     return mySnake
 
-def getNextMoveFromPath:
+def getNextMoveFromPath():
+    pass
 
 def getPossibleMoves(headPos,neckPos,graph):
     dist = getDistance(headPos,neckPos)
