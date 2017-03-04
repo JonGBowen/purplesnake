@@ -43,12 +43,15 @@ def move():
 
     # Get Own Snake
     mySnake = getOwnSnake(data)
-    mySnakeState = getCurrentState(mySnake["health"])
+    mySnakeHealthState = getCurrentHealthState(mySnake["health"])
+    mySnakeLengthState = getCurrentLengthState(len(mySnake["coords"])
 
     mySnakeHeadPos = getMySnakeHeadPos(mySnake)
     mySnakeNeckPos = getMySnakeNeckPos(mySnake)
 
     graph = buildMatrix(data)
+
+    snake_state = "normal"
 
     validMoves = getPossibleMoves(mySnakeHeadPos,mySnakeNeckPos,graph)
     # Transform int matrix to Node matrix.
@@ -192,7 +195,7 @@ def check_if_closest_snake_head(data,my_head_pos,closest_food_coord):
     return False
 
 
-def getCurrentState(health):
+def getCurrentHealthState(health):
     if (health > 55):
         return "healthy"
     elif (health > 40):
@@ -201,6 +204,16 @@ def getCurrentState(health):
         return "hungry"
     else:
         return "berserk"
+
+def getCurrentLengthState(length_of_snake):
+    if (length_of_snake > 20):
+        return "large"
+    elif (length_of_snake  > 10):
+        return "medium"
+    elif (length_of_snake  > 4):
+        return "short"
+    else:
+        return "super_short"
 
 def getMySnakeHeadPos(mySnake):
     coordList = mySnake["coords"]
