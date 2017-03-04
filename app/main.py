@@ -38,7 +38,7 @@ def move():
     # TODO: Do things with data
 
     # Snake ID:
-    mySnakeID = "ef9c2d70-3a48-4b40-a20f-7b02afcc9e5b"
+    mySnakeID = data["you"]
 
     # Get Own Snake
     mySnake = getOwnSnake(data)
@@ -191,7 +191,7 @@ def check_if_closest_snake_head(data,my_head_pos,closest_food_coord):
         # print snake
         coords = snake.get("coords")[0]
         length = len(coordList)
-        headPos = coordList[length-1]
+        headPos = coordList[0]
         other_snake_distance_to_food = manhattan(closest_food_coord,headPos)
         if other_snake_distance_to_food > manhattan(closest_food_coord,my_head_pos):
             return True
@@ -224,14 +224,14 @@ def getTaunt(snake_state):
 def getMySnakeHeadPos(mySnake):
     coordList = mySnake["coords"]
     length = len(coordList)
-    headPos = coordList[length-1]
+    headPos = coordList[0]
     print headPos
     return headPos
 
 def getMySnakeNeckPos(mySnake):
     coordList = mySnake["coords"]
     length = len(coordList)
-    neckPos = coordList[length-2]
+    neckPos = coordList[1]
     return neckPos
 
 class Node:
