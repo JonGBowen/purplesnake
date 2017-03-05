@@ -186,6 +186,7 @@ def getPossibleMovesSansGraph(headPos,neckPos,snakes,height,width,food):
             break
         print move
     if not foodSpot == "ay":
+        print "REMOVE NON FOOD MOVES"
         moves = [foodSpot]
     return moves
 
