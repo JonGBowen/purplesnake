@@ -108,10 +108,10 @@ def move():
     print path
 
     possibleMoves = getPossibleMovesSansGraph(mySnakeHeadPos,mySnakeNeckPos,data["snakes"],height,width)
-    possibleMoves = getMoveStringFromMoveVector(possibleMoves)
-    print "POSSIBLE MOVES NOW IN STRING: "
-    print possibleMoves
-    direction = random.choice(possibleMoves)
+    possibleMoveStrings = []
+    for move in possibleMoves:
+        possibleMoveStrings.append(getMoveStringFromMoveVector(move))
+    direction = random.choice(possibleMoveStrings)
     print "DIRECTION"
     print direction
     # Get next move from path
