@@ -202,8 +202,8 @@ def check_if_closest_snake_head(data,my_head_pos,closest_food_coord):
     for snake in snakes:
         # print snake
         coords = snake.get("coords")[0]
-        length = len(coordList)
-        headPos = coordList[0]
+        length = len(coords)
+        headPos = coords[0]
         other_snake_distance_to_food = manhattan(closest_food_coord,headPos)
         if other_snake_distance_to_food > manhattan(closest_food_coord,my_head_pos):
             return True
