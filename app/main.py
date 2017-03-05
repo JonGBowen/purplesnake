@@ -108,7 +108,12 @@ def move():
     print path
 
     possibleMoves = getPossibleMovesSansGraph(mySnakeHeadPos,mySnakeNeckPos,data["snakes"],height,width)
-    direction = random.choice(getMoveStringFromMoveVector(possibleMoves))
+    possibleMoves = getMoveStringFromMoveVector(possibleMoves)
+    print "POSSIBLE MOVES NOW IN STRING: "
+    print possibleMoves
+    direction = random.choice(possibleMoves)
+    print "DIRECTION"
+    print direction
     # Get next move from path
     if direction == 'derp':
         # We're screwed at this point
