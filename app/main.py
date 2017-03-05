@@ -198,6 +198,9 @@ def getPossibleMoves(headPos,neckPos,graph):
     return possibleMoves
 
 def getMoveStringFromMoveVector(moveVector):
+    print "MOVE VECTOR IS "
+    print moveVector
+
     move = "up"
     if moveVector == (-1,0):
         move = "left"
