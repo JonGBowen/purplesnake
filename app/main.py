@@ -111,7 +111,7 @@ def move():
         # We're screwed at this point
         taunt = 'I hate you all !!!'
     else:
-        taunt = 'I will not die this turn'
+        taunt = 'I will not die this turn.'
 
     return {
         'move': direction,
@@ -140,7 +140,7 @@ def getPossibleMovesSansGraph(headPos,neckPos,snakes):
         # check if out of bounds
         if not (0 <= pos[0] + move[0] < height and 0 <= pos[1] + move[1] < width):
             moves_to_remove.append(move)
-        elif:
+        else:
             for snake in snakes:
                 if not removed:
                     for coord in snake["coords"]:
