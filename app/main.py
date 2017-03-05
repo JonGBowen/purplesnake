@@ -157,10 +157,10 @@ def getPossibleMovesSansGraph(headPos,neckPos,snakes,height,width):
                     for coord in snake["coords"]:
                         if snake["coords"].index(coord) == 0:
                             # is head. Avoid nearby
-                            coord1 = (coord[0]+1,coord[0])
-                            coord2 = (coord[0]-1,coord[0])
-                            coord3 = (coord[0],coord[0]+1)
-                            coord4 = (coord[0],coord[0]-1)
+                            coord1 = (coord[0]+1,coord[1])
+                            coord2 = (coord[0]-1,coord[1])
+                            coord3 = (coord[0],coord[1]+1)
+                            coord4 = (coord[0],coord[1]-1)
                             adjacent_coords = [coord1,coord2,coord3,coord4]
                             for othercoord in adjacent_coords:
                                 if headPos[0] + move[0] == othercoord[0] and headPos[1] + move[1] == othercoord[1]:
