@@ -63,7 +63,7 @@ def move():
     height = data["height"]
     width = data["width"]
 
-    validMoves = getPossibleMoves(mySnakeHeadPos,mySnakeNeckPos,graph,height,width)
+    #validMoves = getPossibleMoves(mySnakeHeadPos,mySnakeNeckPos,graph,height,width)
     # Transform int matrix to Node matrix.
 
     # TRANSLATE = {0: 'o', 1: 'x', 2: 'g'}
@@ -107,7 +107,7 @@ def move():
     #possibleMoves = getPossibleMoves(mySnakeHeadPos,mySnakeNeckPos,graph)
     print path
 
-    possibleMoves = getPossibleMovesSansGraph(mySnakeHeadPos,mySnakeNeckPos,data["snakes"])
+    possibleMoves = getPossibleMovesSansGraph(mySnakeHeadPos,mySnakeNeckPos,data["snakes"],height,width)
     direction = random.choice(getMoveStringFromMoveVector(possibleMoves))
     # Get next move from path
     if direction == 'derp':
