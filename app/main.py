@@ -82,13 +82,13 @@ def move():
 
     taunt = ''
     # NEW STUFF HERE
-    if path:
-        closest_food = findClosestFoodFromPath(path)
-        is_closest_to_food = check_if_closest_snake_head(data,mySnakeHeadPos,closest_food)
-    else:
-        is_closest_to_food = False
+    # if path:
+    #     closest_food = findClosestFoodFromPath(path)
+    #     is_closest_to_food = check_if_closest_snake_head(data,mySnakeHeadPos,closest_food)
+    # else:
+    #     is_closest_to_food = False
 
-    if is_closest_to_food and path:
+    if path:
         # move towards the food
         tempDist = getDistance(mySnakeHeadPos,path[1])
         direction = getMoveStringFromMoveVector(tempDist)
@@ -99,6 +99,7 @@ def move():
     # END NEW STUFF
     if path == None:
         path = [(0,0),(0,1)]
+        print "NO PATH!!!"
     # Get Possible Moves
     possibleMoves = getPossibleMoves(mySnakeHeadPos,mySnakeNeckPos,graph)
     print path
