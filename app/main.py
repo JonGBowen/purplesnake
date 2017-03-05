@@ -25,8 +25,6 @@ def index():
 def start():
     data = bottle.request.json
 
-    # TODO: Do things with data
-
     return {
         'taunt': 'Insert meme here'
     }
@@ -37,14 +35,10 @@ def move():
     data = bottle.request.json
 
     # Log requests so we can test locally when we EXPLUDE!
-    print "REQUEST: " + str(data)
+    # print "REQUEST: " + str(data)
 
-    # TODO: Do things with data
-
+    # dummy direction if you couldn't already tell
     direction = "derp"
-
-    # Snake ID:
-    mySnakeID = data["you"]
 
     # Get Own Snake
     mySnake = getOwnSnake(data)
@@ -56,31 +50,32 @@ def move():
 
     # pdb.set_trace()
 
+    # might not even need graph later, fuck that SHIT
+    #
+    # @param TRANSLATE <dictionary>
+    #   returns a dictionary in format {'(x, y)': 0, '(z, f)': 1, '(r, t)': 0 } etc etc
+    #   where 0 is the default graph state
+    #         1 is a snake body (could also be your own snake!)
+    #         2 is food! yay
+    #
     graph, TRANSLATE = buildMatrix(data)
 
-    snake_state = "normal"
-
+    # this method is actually useful thank god
     validMoves = getPossibleMoves(mySnakeHeadPos,mySnakeNeckPos,graph)
-    # Transform int matrix to Node matrix.
-
-    # TRANSLATE = {0: 'o', 1: 'x', 2: 'g'}
-
-    # graph = [[Node(TRANSLATE[x], (i, j)) for j, x in enumerate(row)] for i, row in enumerate(graph)]
-
-    graph = [[Node(TRANSLATE[str(x)], (j, i)) for j, x in enumerate(row)] for i, row in enumerate(graph)]
 
     # Find path
-    path = None
-    try:
-        path = bfs(graph, mySnakeHeadPos)
-        print("Path found: {!r}".format(path))
-    except Exception as ex:
-        # Learn to use exceptions. In your original code, "no path" situation
-        # is not handled at all!
-        print('ERROR')
-        print(ex)
+    # path = None
+    # try:
+    #     # path = bfs(graph, mySnakeHeadPos)
+    #     path = simple_translate_path(TRANSLATE)
+    #     print("Path found: {!r}".format(path))
+    # except Exception as ex:
+    #     # Learn to use exceptions. In your original code, "no path" situation
+    #     # is not handled at all!
+    #     print('ERROR')
+    #     print(ex)
 
-    taunt = ''
+    taunt = 'Insert next meme here'
     # NEW STUFF HERE
     # if path:
     #     closest_food = findClosestFoodFromPath(path)
@@ -88,21 +83,23 @@ def move():
     # else:
     #     is_closest_to_food = False
 
-    if path:
-        # move towards the food
-        tempDist = getDistance(mySnakeHeadPos,path[1])
-        direction = getMoveStringFromMoveVector(tempDist)
-        taunt = "this food pellet is mine"
+    # if path:
+    #     # move towards the food
+    #     tempDist = getDistance(mySnakeHeadPos,path[1])
+    #     direction = getMoveStringFromMoveVector(tempDist)
+    #     taunt = "this food pellet is mine"
 
         # TODO: Avoid bucket traps, L-traps
 
     # END NEW STUFF
-    if path == None:
-        path = [(0,0),(0,1)]
-        print "NO PATH!!!"
+    # if path == None:
+    #     path = [(0,0),(0,1)]
+    #     print "NO PATH!!!"
     # Get Possible Moves
-    possibleMoves = getPossibleMoves(mySnakeHeadPos,mySnakeNeckPos,graph)
-    print path
+    # possibleMoves = getPossibleMoves(mySnakeHeadPos,mySnakeNeckPos,graph)
+    # print path
+
+    direction = simple_translate_direction(TRANSLATE, validMoves)
 
     # Get next move from path
     if direction == 'derp':
@@ -113,6 +110,14 @@ def move():
         'move': direction,
         'taunt': taunt
     }
+
+def simple_translate_direction(translate, validMoves):
+    print "valid moves: " + str(validMoves)
+
+
+
+    direction = "down" #remove this for real logic!
+    return direction
 
 def getOwnSnake(data):
     snakes = data["snakes"]
@@ -133,13 +138,13 @@ def getPossibleMoves(headPos,neckPos,graph):
     possibleMoves = []
     disallowedMoves = []
     if dist == (-1,0):
-        disallowedMoves.append("left")
-    elif dist == (0,-1):
-        disallowedMoves.append("down")
-    elif dist == (1,0):
         disallowedMoves.append("right")
-    elif dist == (0,1):
+    elif dist == (0,-1):
         disallowedMoves.append("up")
+    elif dist == (1,0):
+        disallowedMoves.append("left")
+    elif dist == (0,1):
+        disallowedMoves.append("down")
     disallowedMoves.append(dist)
 
     if (-1,0) not in disallowedMoves:
