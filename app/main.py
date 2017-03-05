@@ -210,6 +210,9 @@ def getMoveStringFromMoveVector(moveVector):
         move = "right"
     elif moveVector == (0,1):
         move = "up"
+
+    print "AND THAT TURNED INTO "
+    print moveVector
     return move
 
 def getDistance(coord1,coord2):
