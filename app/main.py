@@ -159,7 +159,6 @@ def getPossibleMovesSansGraph(headPos,neckPos,snakes,height,width):
                             # we have overlap
                             moves_to_remove.append(move)
                             removed = True
-                            break
                 else:
                     break
     print "MOVES TO REMOVE: "
