@@ -16,7 +16,7 @@ def index():
     )
 
     return {
-        'color': '#00ff00',
+        'color': '#8100FF',
         'head': head_url
     }
 
@@ -117,7 +117,7 @@ def move():
     # Get next move from path
     if direction == 'derp':
         # We're screwed at this point
-        taunt = 'I hate you all !!!'
+        taunt = 'nvm'
     else:
         taunt = 'I will not die this turn.'
 
@@ -425,7 +425,7 @@ def end():
     # TODO: Do things with data
 
     return {
-        'taunt': 'we got disssssss'
+        'taunt': 'fml'
     }
 
 
