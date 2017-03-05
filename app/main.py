@@ -99,7 +99,7 @@ def move():
     # possibleMoves = getPossibleMoves(mySnakeHeadPos,mySnakeNeckPos,graph)
     # print path
 
-    direction = simple_translate_direction(TRANSLATE, validMoves)
+    direction = simple_translate_direction(TRANSLATE, validMoves, mySnakeHeadPos)
 
     # Get next move from path
     if direction == 'derp':
@@ -111,12 +111,43 @@ def move():
         'taunt': taunt
     }
 
-def simple_translate_direction(translate, validMoves):
-    print "valid moves: " + str(validMoves)
+def simple_translate_direction(translate, valid_moves, headpos):
+    print "valid moves: " + str(valid_moves)
+    direction = "derp"
+
+    real_valid_moves = []
+
+    # strip out any moves that will kill us
+    for valid_move in valid_moves:
+        x = headpos[0] + valid_move[0]
+        y = headpos[1] + valid_move[1]
+
+        mv = (x, y)
+
+        if translate.has_key(str(mv)):
+            code = translate[str(mv)]
+            if code == 1:
+                # bad
+                pass
+            else:
+                # good
+                real_valid_moves.append(valid_move)
 
 
+    if real_valid_moves:
+        final_move = real_valid_moves[0]
+        if final_move == (-1, 0):
+            direction = "right"
+        elif final_move == (0, -1):
+            direction = "up"
+        elif final_move == (1, 0):
+            direction = "left"
+        elif final_move == (0, 1):
+            direction = "down"
+        else:
+            direction = "derp"
 
-    direction = "down" #remove this for real logic!
+    print "final direction: " + str(direction)
     return direction
 
 def getOwnSnake(data):
