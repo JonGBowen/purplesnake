@@ -60,7 +60,10 @@ def move():
 
     snake_state = "normal"
 
-    validMoves = getPossibleMoves(mySnakeHeadPos,mySnakeNeckPos,graph)
+    height = data["height"]
+    width = data["width"]
+
+    validMoves = getPossibleMoves(mySnakeHeadPos,mySnakeNeckPos,graph,height,width)
     # Transform int matrix to Node matrix.
 
     # TRANSLATE = {0: 'o', 1: 'x', 2: 'g'}
@@ -132,7 +135,7 @@ def getOwnSnake(data):
 def getNextMoveFromPath():
     pass
 
-def getPossibleMovesSansGraph(headPos,neckPos,snakes):
+def getPossibleMovesSansGraph(headPos,neckPos,snakes,height,width):
     moves = [(-1, 0), (1, 0), (0, -1), (0, 1)]
     moves_to_remove = []
     for move in moves:
