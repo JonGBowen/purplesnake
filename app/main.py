@@ -101,13 +101,17 @@ def move():
         path = [(0,0),(0,1)]
         print "NO PATH!!!"
     # Get Possible Moves
-    possibleMoves = getPossibleMoves(mySnakeHeadPos,mySnakeNeckPos,graph)
+    #possibleMoves = getPossibleMoves(mySnakeHeadPos,mySnakeNeckPos,graph)
     print path
 
+    possibleMoves = getPossibleMovesSansGraph(mySnakeHeadPos,mySnakeNeckPos,data["snakes"])
+    direction = random.choice(getMoveStringFromMoveVector(possibleMoves))
     # Get next move from path
     if direction == 'derp':
         # We're screwed at this point
         taunt = 'I hate you all !!!'
+    else:
+        taunt = 'I will not die this turn'
 
     return {
         'move': direction,
@@ -127,6 +131,33 @@ def getOwnSnake(data):
 
 def getNextMoveFromPath():
     pass
+
+def getPossibleMovesSansGraph(headPos,neckPos,snakes):
+    moves = [(-1, 0), (1, 0), (0, -1), (0, 1)]
+    moves_to_remove = []
+    for move in moves:
+        removed = False
+        # check if out of bounds
+        if not (0 <= pos[0] + move[0] < height and 0 <= pos[1] + move[1] < width):
+            moves_to_remove.append(move)
+        elif:
+            for snake in snakes:
+                if not removed:
+                    for coord in snake["coords"]:
+                        if pos[0] + move[0] == coord[0] and pos[1] + move[1] == coord[1]:
+                            # we have overlap
+                            moves_to_remove.append(move)
+                            removed = True
+                            break
+                else:
+                    break
+    for move in moves_to_remove:
+        moves.remove(move)
+    print "POSSIBLE MOVES: "
+    for move in moves:
+        print move
+    return moves
+
 
 def getPossibleMoves(headPos,neckPos,graph):
     dist = getDistance(headPos,neckPos)
