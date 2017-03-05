@@ -157,7 +157,9 @@ def getPossibleMovesSansGraph(headPos,neckPos,snakes,height,width):
                             break
                 else:
                     break
+    print "MOVES TO REMOVE: "
     for move in moves_to_remove:
+        print move
         moves.remove(move)
     print "POSSIBLE MOVES: "
     for move in moves:
