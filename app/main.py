@@ -138,7 +138,10 @@ def getPossibleMovesSansGraph(headPos,neckPos,snakes):
     for move in moves:
         removed = False
         # check if out of bounds
-        if not (0 <= pos[0] + move[0] < height and 0 <= pos[1] + move[1] < width):
+        if not (0 <= headPos[0] + move[0] < height and 0 <= headPos[1] + move[1] < width):
+            moves_to_remove.append(move)
+        elif headPos[0] + move[0] == neckPos[0] and headPos[1] + move[1] == neckPos[1]:
+            #run into our own neck: no thanks
             moves_to_remove.append(move)
         else:
             for snake in snakes:
