@@ -150,7 +150,7 @@ def getPossibleMovesSansGraph(headPos,neckPos,snakes,height,width):
             for snake in snakes:
                 if not removed:
                     for coord in snake["coords"]:
-                        if pos[0] + move[0] == coord[0] and pos[1] + move[1] == coord[1]:
+                        if headPos[0] + move[0] == coord[0] and headPos[1] + move[1] == coord[1]:
                             # we have overlap
                             moves_to_remove.append(move)
                             removed = True
