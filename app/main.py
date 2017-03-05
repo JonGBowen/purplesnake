@@ -25,21 +25,24 @@ def index():
 def start():
     data = bottle.request.json
 
-    # TODO: Do things with data
+    head_url = '%s://%s/static/head.png' % (
+        bottle.request.urlparts.scheme,
+        bottle.request.urlparts.netloc
+    )
 
     return {
-        'taunt': 'Insert meme here'
+        'taunt': 'Insert meme here',
+        'color': '#8100FF',
+        'head': head_url,
+        'head_type': 'safe',
+        'tail_type': 'round-bum',
+        'name': 'avoids-death-snake'
     }
 
 
 @bottle.post('/move')
 def move():
     data = bottle.request.json
-
-    # Log requests so we can test locally when we EXPLUDE!
-    # print "REQUEST: " + str(data)
-
-    # TODO: Do things with data
 
     direction = "derp"
 
@@ -54,7 +57,6 @@ def move():
     mySnakeHeadPos = getMySnakeHeadPos(mySnake)
     mySnakeNeckPos = getMySnakeNeckPos(mySnake)
 
-    # pdb.set_trace()
 
     graph, TRANSLATE = buildMatrix(data)
 
@@ -63,49 +65,8 @@ def move():
     height = data["height"]
     width = data["width"]
 
-    #validMoves = getPossibleMoves(mySnakeHeadPos,mySnakeNeckPos,graph,height,width)
-    # Transform int matrix to Node matrix.
-
-    # TRANSLATE = {0: 'o', 1: 'x', 2: 'g'}
-
-    # graph = [[Node(TRANSLATE[x], (i, j)) for j, x in enumerate(row)] for i, row in enumerate(graph)]
-
-    # graph = [[Node(TRANSLATE[str(x)], (j, i)) for j, x in enumerate(row)] for i, row in enumerate(graph)]
-
-    # Find path
-    # path = None
-    # try:
-    #     path = bfs(graph, mySnakeHeadPos)
-    #     print("Path found: {!r}".format(path))
-    # except Exception as ex:
-    #     # Learn to use exceptions. In your original code, "no path" situation
-    #     # is not handled at all!
-    #     print('ERROR')
-    #     print(ex)
 
     taunt = 'I hope I dont die lol'
-    # NEW STUFF HERE
-    # if path:
-    #     closest_food = findClosestFoodFromPath(path)
-    #     is_closest_to_food = check_if_closest_snake_head(data,mySnakeHeadPos,closest_food)
-    # else:
-    #     is_closest_to_food = False
-
-    # if path:
-    #     # move towards the food
-    #     tempDist = getDistance(mySnakeHeadPos,path[1])
-    #     direction = getMoveStringFromMoveVector(tempDist)
-    #     taunt = "this food pellet is mine"
-
-        # TODO: Avoid bucket traps, L-traps
-
-    # END NEW STUFF
-    # if path == None:
-    #     path = [(0,0),(0,1)]
-    #     print "NO PATH!!!"
-    # Get Possible Moves
-    #possibleMoves = getPossibleMoves(mySnakeHeadPos,mySnakeNeckPos,graph)
-    # print path
 
     possibleMoves = getPossibleMovesSansGraph(mySnakeHeadPos,mySnakeNeckPos,data["snakes"],height,width)
     possibleMoveStrings = []
