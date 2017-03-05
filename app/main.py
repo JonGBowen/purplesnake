@@ -54,6 +54,8 @@ def move():
     mySnakeHeadPos = getMySnakeHeadPos(mySnake)
     mySnakeNeckPos = getMySnakeNeckPos(mySnake)
 
+    food = data["food"]
+
     # pdb.set_trace()
 
     graph, TRANSLATE = buildMatrix(data)
@@ -107,7 +109,7 @@ def move():
     #possibleMoves = getPossibleMoves(mySnakeHeadPos,mySnakeNeckPos,graph)
     # print path
 
-    possibleMoves = getPossibleMovesSansGraph(mySnakeHeadPos,mySnakeNeckPos,data["snakes"],height,width)
+    possibleMoves = getPossibleMovesSansGraph(mySnakeHeadPos,mySnakeNeckPos,data["snakes"],height,width,food)
     possibleMoveStrings = []
     for move in possibleMoves:
         possibleMoveStrings.append(getMoveStringFromMoveVector(move))
@@ -140,7 +142,7 @@ def getOwnSnake(data):
 def getNextMoveFromPath():
     pass
 
-def getPossibleMovesSansGraph(headPos,neckPos,snakes,height,width):
+def getPossibleMovesSansGraph(headPos,neckPos,snakes,height,width,food):
     moves = [(-1, 0), (1, 0), (0, -1), (0, 1)]
     moves_to_remove = []
     for move in moves:
@@ -176,8 +178,14 @@ def getPossibleMovesSansGraph(headPos,neckPos,snakes,height,width):
         print move
         moves.remove(move)
     print "POSSIBLE MOVES: "
+    foodSpot = "ay"
     for move in moves:
+        if move[0]+headPos[0] == food[0] and move[1]+headPos[1] == food[1]:
+            #found food
+            foodSpot = move
+            break
         print move
+    moves = [foodSpot]
     return moves
 
 
@@ -425,7 +433,7 @@ def end():
     # TODO: Do things with data
 
     return {
-        'taunt': 'we got disssssss'
+        'taunt': 'Not dead? Not dead?'
     }
 
 
