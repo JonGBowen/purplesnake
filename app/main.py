@@ -204,11 +204,11 @@ def getMoveStringFromMoveVector(moveVector):
     move = "up"
     if moveVector == (-1,0):
         move = "left"
-    elif moveVector == (0,-1):
+    elif moveVector == (0,1):
         move = "down"
     elif moveVector == (1,0):
         move = "right"
-    elif moveVector == (0,1):
+    elif moveVector == (0,-1):
         move = "up"
 
     print "AND THAT TURNED INTO "
